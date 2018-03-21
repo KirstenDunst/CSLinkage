@@ -194,11 +194,17 @@ static NSString *provinceCellID = @"tableProvinceCellID";
 - (void)selectRowAtIndexPath:(NSInteger)index {
     [self.provinceTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    static float lastOffsetY = 0;
+ static float lastOffsetY = 0;
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (scrollView == self.cityCollView) {
-        isDownOrUp = lastOffsetY < scrollView.contentOffset.y;
         lastOffsetY = scrollView.contentOffset.y;
+    }
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.cityCollView) {
+        //是否是向下滑动，yes为向下
+        isDownOrUp = lastOffsetY < scrollView.contentOffset.y;
+//        lastOffsetY = scrollView.contentOffset.y;
     }
 }
 - (void)didReceiveMemoryWarning {
